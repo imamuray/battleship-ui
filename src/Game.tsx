@@ -14,11 +14,30 @@ function Square() {
 
 function Board() {
   const size = 10;
+  const header = Array(size).fill(null).map((_, i) =>
+    <th>
+      {String.fromCodePoint('A'.charCodeAt(0) + i)}
+    </th>
+  );
   const row = Array(size).fill(<td><Square /></td>);
-  const squares = Array(size).fill(<tr>{row}</tr>)
+  const board = Array(size).fill(null).map((_, i) =>
+    <tr>
+      <td>{i + 1}</td>{row}
+    </tr>
+  );
+
   return (
     <>
-      <table>{squares}</table>
+      <table>
+        <thead>
+          <tr>
+            <td></td>{header}
+          </tr>
+        </thead>
+        <tbody>
+          {board}
+        </tbody>
+      </table>
     </>
   );
 }
