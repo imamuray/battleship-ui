@@ -1,4 +1,3 @@
-import { BADRESP } from 'dns';
 import React, { useState } from 'react';
 import './Game.css';
 
@@ -73,7 +72,7 @@ function Game() {
       <div className="game-info">
         <h1>Battleship Game</h1>
         <p>
-          マスをクリックすると0と1が切り替わる
+          マスをクリックするとクリック回数が表示される
         </p>
       </div>
     </div>
