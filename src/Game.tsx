@@ -1,31 +1,53 @@
+import { BADRESP } from 'dns';
 import React, { useState } from 'react';
 import './Game.css';
 
-function Square() {
-  const [isOn, setIsOn] = useState(false);
-  
+interface SquareProps {
+  count: number,
+  incrementBoardCount: () => void
+}
+
+function Square(props: SquareProps) {
+  const [localCount, setLocalCount] = useState(0);
+  const handleClick = () => {
+    props.incrementBoardCount();
+    setLocalCount(props.count)
+  }
   return (
     <button className="square"
-      onClick={() => setIsOn(!isOn)}>
-      {isOn ? "1" : "0"}
+      onClick={handleClick}>
+      {localCount}
     </button>
   );
 }
 
 function Board() {
+  // 手数のカウント
+  const [count ,setCount] = useState(0);
+  // const [board, setBoard] = useState(Array<number>(size).fill(0).map(() => Array<number>(size).fill(0)));
+
+  const incrementBoardCount = () => {
+    setCount(count + 1);
+  };
+
   const size = 10;
   const header = Array(size).fill(null).map((_, i) =>
     <th>
       {String.fromCodePoint('A'.charCodeAt(0) + i)}
     </th>
   );
-  const row = Array(size).fill(<td><Square /></td>);
-  const board = Array(size).fill(null).map((_, i) =>
+  const row = Array(size).fill(
+    <td>
+      <Square count={count} incrementBoardCount={incrementBoardCount}/>
+    </td>
+  );
+  const boardUI = Array(size).fill(null).map((_, i) =>
     <tr>
       <td>{i + 1}</td>{row}
     </tr>
   );
 
+  
   return (
     <>
       <table>
@@ -35,7 +57,7 @@ function Board() {
           </tr>
         </thead>
         <tbody>
-          {board}
+          {boardUI}
         </tbody>
       </table>
     </>
